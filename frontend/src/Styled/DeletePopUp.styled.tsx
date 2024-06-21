@@ -55,6 +55,10 @@ export const Container = styled.div<{
     font-family: "Roboto Slab", sans-serif;
     color: ${(props) => (props.$toggleBg ? "#C1C4CB" : "#35393F")};
   }
+  & p:nth-of-type(2) span {
+    color: ${(props) => (props.$toggleBg ? "white" : "black")};
+    font-weight: 700;
+  }
   & > div {
     padding: 1.5rem;
   }

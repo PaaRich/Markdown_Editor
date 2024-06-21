@@ -1,22 +1,42 @@
+import { useContext } from "react";
 import { FiPlus } from "react-icons/fi";
 import Item from "./Item";
 import { FaRegMoon } from "react-icons/fa6";
 import { TiWeatherSunny } from "react-icons/ti";
 import { MdOutlineClose } from "react-icons/md";
+//import { Link } from "react-router-dom";
 import {
   BackgroundToggle,
   Button,
   Container,
   CloseBtn,
+  ItemList,
 } from "../Styled/Nav.styled";
+import { ApiValue } from "../App";
 
 interface NavProps {
   open: boolean;
   toggleBg: boolean;
   setToggleBg: React.Dispatch<React.SetStateAction<boolean>>;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setMarkdown: React.Dispatch<React.SetStateAction<string>>;
+  setName: React.Dispatch<React.SetStateAction<string>>;
 }
-const Nav = ({ open, toggleBg, setToggleBg, setOpen }: NavProps) => {
+export interface Item {
+  id?: number;
+  name?: string;
+  description?: string;
+  createdAt?: string;
+}
+const Nav = ({
+  open,
+  toggleBg,
+  setToggleBg,
+  setOpen,
+  setMarkdown,
+  setName,
+}: NavProps) => {
+  const value = useContext(ApiValue);
   const isOpen: boolean = open;
   return (
     <Container $isOpen={isOpen}>
@@ -32,9 +52,20 @@ const Nav = ({ open, toggleBg, setToggleBg, setOpen }: NavProps) => {
               New Document
             </span>
           </Button>
-          <Item date="01 April 2022" name="welcome.md" />
-          <Item date="05 July 2022" name="README.md" />
-          <Item date="09 May 2022" name="description.md" />
+          <ItemList>
+            {value &&
+              value.map((item: Item) => (
+                <Item
+                  key={item.id}
+                  date={item.createdAt?.split("T")[0]}
+                  name={item.name}
+                  onclick={() => {
+                    setMarkdown(() => item.description);
+                    setName(() => item.name);
+                  }}
+                />
+              ))}
+          </ItemList>
         </div>
         <BackgroundToggle $toggleBg={toggleBg}>
           <FaRegMoon />
@@ -46,7 +77,6 @@ const Nav = ({ open, toggleBg, setToggleBg, setOpen }: NavProps) => {
         <CloseBtn
           onClick={() => {
             setOpen(() => !isOpen);
-            console.log("clicked");
           }}
         >
           <MdOutlineClose size={26} />

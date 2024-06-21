@@ -1,9 +1,10 @@
+//import { useContext } from "react";
 import { RiMenuFill } from "react-icons/ri";
 import { MdOutlineClose } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { CiFileOn } from "react-icons/ci";
 import { IoSaveOutline } from "react-icons/io5";
-import { useState } from "react";
+//import { useState } from "react";
 import {
   Container,
   Menu,
@@ -11,7 +12,7 @@ import {
   DelBtn,
   SaveBtn,
 } from "../Styled/Title.styled";
-
+//import { ApiValue } from "../App";
 interface SetOpen {
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -19,10 +20,13 @@ interface SetOpen {
   toggleDel: boolean;
   setToggleDel: React.Dispatch<React.SetStateAction<boolean>>;
   markdown: string;
+  name: string;
+  setName: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const Title = (props: SetOpen) => {
-  const [name, setName] = useState<string>("Welcome.md");
+  //const value = useContext(ApiValue);
+  //const [name, setName] = useState<string>("Welcome.md");
   const localOpen = props.open;
   const positive = props.markdown.length > 2;
   return (
@@ -49,8 +53,8 @@ const Title = (props: SetOpen) => {
               minLength={2}
               type="text"
               pattern="[a-zA-Z]*"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={props.name}
+              onChange={(e) => props.setName(e.target.value)}
             />
           </label>
         </FileName>

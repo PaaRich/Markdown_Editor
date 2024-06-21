@@ -1,15 +1,30 @@
 import { ThemeProvider } from "styled-components";
-import { useState, useEffect } from "react";
+import { useState, useEffect, createContext } from "react";
 import { Container, Home } from "./Styled/Container.styled";
 import { MarkPreContainer } from "./Styled/Container.styled";
 import { GlobalStyle } from "./Styled/GlobalStyle";
+//import { Route, Routes } from "react-router-dom";
 import axios from "axios";
 import Nav from "./Components/Nav";
 import TitleBar from "./Components/TitleBar";
 import Markdown from "./Components/Markdown";
 import Editor from "./Components/Editor";
 import DeletePopUp from "./Components/DeletePopUp";
+
+//api data interface
+interface Api {
+  id?: number;
+  name?: string;
+  description?: string;
+  createdAt?: Date;
+}
+interface ApiArray {
+  [index: number]: Api;
+}
+export const ApiValue = createContext<ApiArray | null>(null);
 function App() {
+  //markdown name
+  const [name, setName] = useState<string>("Welcome.md");
   //markdown input
   const [markdown, setMarkdown] = useState<string>("");
   //toggle nav component
@@ -22,22 +37,16 @@ function App() {
   const [toggleBg, setToggleBg] = useState<boolean>(true);
 
   //BACKEND DATA MANAGEMENT
-  const [data, setData] = useState({});
+  const [apiValue, setApiValue] = useState([]);
 
+  const fetchData = async () => {
+    const response = await axios.get("http://localhost:3000/api/v1/markdown/");
+    setApiValue(response.data.response);
+    console.log(apiValue);
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(
-        "http://localhost:3000/api/v1/markdown/"
-      );
-      try {
-        setData(response.data);
-        console.log(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
     fetchData();
-  }, [data]);
+  }, []);
 
   const theme = {
     backgroundColors: {
@@ -56,47 +65,54 @@ function App() {
 
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <Container>
-          <Nav
-            toggleBg={toggleBg}
-            setToggleBg={setToggleBg}
-            open={isOpen}
-            setOpen={setIsOpen}
-          />
-          <Home $isOpen={isOpen} $toggleDel={toggleDel}>
-            <TitleBar
+      <ApiValue.Provider value={apiValue}>
+        <ThemeProvider theme={theme}>
+          <GlobalStyle />
+          <Container>
+            <Nav
+              toggleBg={toggleBg}
+              setToggleBg={setToggleBg}
+              open={isOpen}
+              setOpen={setIsOpen}
+              setMarkdown={setMarkdown}
+              setName={setName}
+            />
+            <Home $isOpen={isOpen} $toggleDel={toggleDel}>
+              <TitleBar
+                toggleDel={toggleDel}
+                setToggleDel={setToggleDel}
+                setOpen={setIsOpen}
+                setToggle={setToggle}
+                open={isOpen}
+                markdown={markdown}
+                name={name}
+                setName={setName}
+              />
+              <MarkPreContainer>
+                <Markdown
+                  markdown={markdown}
+                  setMarkdown={setMarkdown}
+                  toggleBg={toggleBg}
+                  toggle={toggle}
+                  setToggle={setToggle}
+                />
+                <Editor
+                  toggleBg={toggleBg}
+                  markdown={markdown}
+                  toggle={toggle}
+                  setToggle={setToggle}
+                />
+              </MarkPreContainer>
+            </Home>
+            <DeletePopUp
+              toggleBg={toggleBg}
               toggleDel={toggleDel}
               setToggleDel={setToggleDel}
-              setOpen={setIsOpen}
-              setToggle={setToggle}
-              open={isOpen}
-              markdown={markdown}
+              name={name}
             />
-            <MarkPreContainer>
-              <Markdown
-                markdown={markdown}
-                setMarkdown={setMarkdown}
-                toggleBg={toggleBg}
-                toggle={toggle}
-                setToggle={setToggle}
-              />
-              <Editor
-                toggleBg={toggleBg}
-                markdown={markdown}
-                toggle={toggle}
-                setToggle={setToggle}
-              />
-            </MarkPreContainer>
-          </Home>
-          <DeletePopUp
-            toggleBg={toggleBg}
-            toggleDel={toggleDel}
-            setToggleDel={setToggleDel}
-          />
-        </Container>
-      </ThemeProvider>
+          </Container>
+        </ThemeProvider>
+      </ApiValue.Provider>
     </>
   );
 }
