@@ -14,7 +14,7 @@ Features
 
 Getting Started
 
-1. Clone the repository: `git clone (link unavailable)
+1. Clone the repository: `git clone https://github.com/PaaRich/Markdown_Editor.git`
 2. Install dependencies: npm install
 3. Start the app: npm run dev
 4. Open in browser: http://localhost:5173
