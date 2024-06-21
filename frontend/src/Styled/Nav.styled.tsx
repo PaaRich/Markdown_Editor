@@ -88,6 +88,7 @@ export const ItemStyled = styled.div`
   padding: 1rem;
   border-radius: 2px;
   transition-duration: 0.5s;
+  width: 100%;
   cursor: pointer;
 
   div {
@@ -108,6 +109,15 @@ export const ItemStyled = styled.div`
   &:hover p:nth-child(2) {
     color: rgb(243, 151, 101);
   }
+`;
+export const ItemList = styled.div`
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
 `;
 export const BackgroundToggle = styled.div<{ $toggleBg: boolean }>`
   display: flex;
