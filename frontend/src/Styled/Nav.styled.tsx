@@ -111,13 +111,30 @@ export const ItemStyled = styled.div`
   }
 `;
 export const ItemList = styled.div`
+  height: 70dvh;
   width: 95%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  overflow-y: auto;
+  overflow-y: scroll;
   overflow-x: hidden;
   -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+export const NotFound = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: inherit;
+  // margin: 50% auto 0 auto;
+
+  h2 {
+    font-size: 45px;
+  }
 `;
 export const BackgroundToggle = styled.div<{ $toggleBg: boolean }>`
   display: flex;
