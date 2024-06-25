@@ -3,6 +3,7 @@ import { useState, useEffect, createContext } from "react";
 import { Container, Home } from "./Styled/Container.styled";
 import { MarkPreContainer } from "./Styled/Container.styled";
 import { GlobalStyle } from "./Styled/GlobalStyle";
+//import { welcome } from "./assets/welcome";
 //import { Route, Routes } from "react-router-dom";
 import axios from "axios";
 import Nav from "./Components/Nav";
@@ -21,12 +22,14 @@ interface Api {
 interface ApiArray {
   [index: number]: Api;
 }
-export const ApiValue = createContext<ApiArray | null>(null);
+
+export const ApiValue = createContext<ApiArray>([]);
+
 function App() {
   //markdown name
   const [name, setName] = useState<string>("Welcome.md");
   //markdown input
-  const [markdown, setMarkdown] = useState<string>("");
+  const [markdown, setMarkdown] = useState<string>(" ");
   //toggle nav component
   const [isOpen, setIsOpen] = useState<boolean>(false);
   //toggle preview component
@@ -40,8 +43,8 @@ function App() {
   const [apiValue, setApiValue] = useState([]);
 
   const fetchData = async () => {
-    const response = await axios.get("http://localhost:3000/api/v1/markdown/");
-    setApiValue(response.data.response);
+    const res = await axios.get("http://localhost:3000/api/v1/markdown/");
+    setApiValue(res.data.response);
     console.log(apiValue);
   };
   useEffect(() => {
@@ -87,6 +90,7 @@ function App() {
                 markdown={markdown}
                 name={name}
                 setName={setName}
+                setMarkdown={setMarkdown}
               />
               <MarkPreContainer>
                 <Markdown
@@ -109,6 +113,8 @@ function App() {
               toggleDel={toggleDel}
               setToggleDel={setToggleDel}
               name={name}
+              setName={setName}
+              setMarkdown={setMarkdown}
             />
           </Container>
         </ThemeProvider>

@@ -78,10 +78,11 @@ export const FileName = styled.div`
     }
   }
 `;
-export const DelBtn = styled.div`
+export const DelBtn = styled.div<{ $positive?: boolean }>`
   cursor: pointer;
   transition-duration: 0.5s;
   color: rgb(124, 129, 139);
+  pointer-events: ${(props) => !props.$positive && "none"};
 
   &:hover {
     color: ${(props) => props.theme.backgroundColors.lightBrickRed};

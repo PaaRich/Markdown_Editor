@@ -4,6 +4,7 @@ import Item from "./Item";
 import { FaRegMoon } from "react-icons/fa6";
 import { TiWeatherSunny } from "react-icons/ti";
 import { MdOutlineClose } from "react-icons/md";
+import { TbFileSad } from "react-icons/tb";
 //import { Link } from "react-router-dom";
 import {
   BackgroundToggle,
@@ -11,6 +12,7 @@ import {
   Container,
   CloseBtn,
   ItemList,
+  NotFound,
 } from "../Styled/Nav.styled";
 import { ApiValue } from "../App";
 
@@ -23,10 +25,10 @@ interface NavProps {
   setName: React.Dispatch<React.SetStateAction<string>>;
 }
 export interface Item {
-  id?: number;
-  name?: string;
-  description?: string;
-  createdAt?: string;
+  id: number;
+  name: string;
+  description: string;
+  createdAt: string;
 }
 const Nav = ({
   open,
@@ -46,25 +48,36 @@ const Nav = ({
           <div className="header">
             <p>MY DOCUMENTS</p>
           </div>
-          <Button>
+          <Button
+            onClick={() => {
+              setMarkdown(" ");
+              setName("Untitled.md");
+            }}
+          >
             <span>
               <FiPlus />
               New Document
             </span>
           </Button>
           <ItemList>
-            {value &&
+            {value.length > 0 ? (
               value.map((item: Item) => (
                 <Item
                   key={item.id}
                   date={item.createdAt?.split("T")[0]}
                   name={item.name}
                   onclick={() => {
-                    setMarkdown(() => item.description);
-                    setName(() => item.name);
+                    setMarkdown(item.description);
+                    setName(item.name);
                   }}
                 />
-              ))}
+              ))
+            ) : (
+              <NotFound>
+                <h2>No Item!</h2>
+                <TbFileSad size={100} />
+              </NotFound>
+            )}
           </ItemList>
         </div>
         <BackgroundToggle $toggleBg={toggleBg}>
