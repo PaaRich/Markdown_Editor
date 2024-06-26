@@ -1,4 +1,4 @@
-//import { useContext } from "react";
+//import { useState } from "react";
 import { RiMenuFill } from "react-icons/ri";
 import { MdOutlineClose } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -12,8 +12,8 @@ import {
   DelBtn,
   SaveBtn,
 } from "../Styled/Title.styled";
-//import { useState } from "react";
-//import { ApiValue } from "../App";
+import { useContext } from "react";
+import { CONTEXT_VALUE } from "../store/AppContext";
 interface SetOpen {
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -45,9 +45,15 @@ const Title = ({
   //const [successMsg,setSuccessMsg]=useState<string>(" ")
   const localOpen = open;
   const positive = markdown.length > 2;
-
+  const VALUE = useContext(CONTEXT_VALUE);
+  const setIsSubmitted = VALUE?.setIsSubmitted;
+  const setIsLoading = VALUE?.setIsLoading;
+  const setIsSuccessful = VALUE?.setIsSuccessful;
+  const setIsError = VALUE?.setIsError;
+  //const { setIsSubmitted, setIsLoading, setIsSuccessful } = VALUE;
   const handleOnSubmit: React.FormEventHandler<HTMLFormElement> = (Event) => {
     Event.preventDefault();
+    VALUE?.reSet();
     const data: RequestBody = {
       name: name,
       description: markdown,
@@ -56,12 +62,26 @@ const Title = ({
     axios
       .post("http://localhost:3000/api/v1/markdown", data)
       .then(() => {
-        alert(`${name} saved`);
         setName("Untitled.md");
         setMarkdown(" ");
         // setSuccessMsg()
+        setIsSubmitted(true);
+        setIsLoading(false);
+        setIsSuccessful(true);
       })
-      .catch((err) => console.log(err));
+      .catch(
+        (err) => {
+          setIsError(true);
+          err.message === "Request failed with status code 404" &&
+            console.log("Change filename");
+          setIsLoading(false);
+        }
+        // console.log(
+        //   err.config.data.split(",")[0].match(/^(?!name$)[\w@]+$/),
+        //   err.config.data.split(",")[0],
+        //   err
+        // )
+      );
   };
 
   return (
@@ -100,7 +120,11 @@ const Title = ({
           <DelBtn onClick={() => setToggleDel(true)} $positive={positive}>
             <RiDeleteBin6Line size={21} />
           </DelBtn>
-          <SaveBtn $positive={positive} type="submit">
+          <SaveBtn
+            $positive={positive}
+            type="submit"
+            onClick={() => setIsLoading(true)}
+          >
             <IoSaveOutline size={20} />
             <span>Save Changes</span>
           </SaveBtn>

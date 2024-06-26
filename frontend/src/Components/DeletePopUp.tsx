@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import React from "react";
-import { Container } from "../Styled/DeletePopUp.styled";
+import { Container, CloseBtn } from "../Styled/DeletePopUp.styled";
 import axios from "axios";
-import { ApiValue } from "../App";
-import { Item } from "./Nav";
+import { CONTEXT_VALUE } from "../store/AppContext";
+import { IoClose } from "react-icons/io5";
 //import { Item } from "./Nav";
 interface DelProps {
   toggleBg: boolean;
@@ -22,26 +22,25 @@ const DeletePopUp = ({
   setName,
   setMarkdown,
 }: DelProps) => {
-  const value = useContext(ApiValue);
-
+  const VALUE = useContext(CONTEXT_VALUE);
+  const setIsSubmitted = VALUE?.setIsSubmitted;
   const deleteDoc = () => {
     axios.delete(`http://localhost:3000/api/v1/markdown/${name}`).then(() => {
-      alert(`${name} deleted`);
-      setName("Untitled.me");
+      setName("Untitled.md");
       setMarkdown(" ");
-      // value.filter((item: Item) => {
-      //   item.name === name;
-      // });
-      const index = value.indexOf(name);
-      if (index !== -1) {
-        value.splice(index, 1);
-      }
+      setIsSubmitted(true);
     });
   };
 
   return (
     <Container $toggleBg={toggleBg} $toggleDel={toggleDel}>
       <div>
+        <CloseBtn
+          $toggleBg={toggleBg}
+          onClick={() => setToggleDel(() => false)}
+        >
+          <IoClose size={28} />
+        </CloseBtn>
         <p>Delete this document?</p>
         <p>
           Are you sure you want to delete the <br /> <span>{name}</span>{" "}
@@ -51,6 +50,7 @@ const DeletePopUp = ({
           type="submit"
           onClick={() => {
             setToggleDel(() => false);
+            VALUE?.reSet();
             deleteDoc();
           }}
         >
