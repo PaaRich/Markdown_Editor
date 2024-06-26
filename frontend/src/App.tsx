@@ -1,29 +1,18 @@
 import { ThemeProvider } from "styled-components";
-import { useState, useEffect, createContext } from "react";
+import { useState, useContext } from "react";
 import { Container, Home } from "./Styled/Container.styled";
 import { MarkPreContainer } from "./Styled/Container.styled";
 import { GlobalStyle } from "./Styled/GlobalStyle";
-//import { welcome } from "./assets/welcome";
-//import { Route, Routes } from "react-router-dom";
-import axios from "axios";
 import Nav from "./Components/Nav";
 import TitleBar from "./Components/TitleBar";
 import Markdown from "./Components/Markdown";
 import Editor from "./Components/Editor";
 import DeletePopUp from "./Components/DeletePopUp";
-
-//api data interface
-interface Api {
-  id?: number;
-  name?: string;
-  description?: string;
-  createdAt?: Date;
-}
-interface ApiArray {
-  [index: number]: Api;
-}
-
-export const ApiValue = createContext<ApiArray>([]);
+import { Loader } from "./Styled/Container.styled";
+import Feedback from "./Components/Feedback";
+import { FaRegCheckCircle } from "react-icons/fa";
+import { TiCancel } from "react-icons/ti";
+import { CONTEXT_VALUE } from "./store/AppContext";
 
 function App() {
   //markdown name
@@ -38,18 +27,7 @@ function App() {
   const [toggleDel, setToggleDel] = useState<boolean>(false);
   //toggle background
   const [toggleBg, setToggleBg] = useState<boolean>(true);
-
-  //BACKEND DATA MANAGEMENT
-  const [apiValue, setApiValue] = useState([]);
-
-  const fetchData = async () => {
-    const res = await axios.get("http://localhost:3000/api/v1/markdown/");
-    setApiValue(res.data.response);
-    console.log(apiValue);
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
+  //toggle loader
 
   const theme = {
     backgroundColors: {
@@ -66,59 +44,74 @@ function App() {
     },
   };
 
+  const VALUE = useContext(CONTEXT_VALUE);
+  const isLoading = VALUE?.isLoading;
+  const isSuccessful = VALUE?.isSuccessful;
+  const isError = VALUE?.isError;
   return (
     <>
-      <ApiValue.Provider value={apiValue}>
-        <ThemeProvider theme={theme}>
-          <GlobalStyle />
-          <Container>
-            <Nav
-              toggleBg={toggleBg}
-              setToggleBg={setToggleBg}
-              open={isOpen}
-              setOpen={setIsOpen}
-              setMarkdown={setMarkdown}
-              setName={setName}
-            />
-            <Home $isOpen={isOpen} $toggleDel={toggleDel}>
-              <TitleBar
-                toggleDel={toggleDel}
-                setToggleDel={setToggleDel}
-                setOpen={setIsOpen}
-                setToggle={setToggle}
-                open={isOpen}
-                markdown={markdown}
-                name={name}
-                setName={setName}
-                setMarkdown={setMarkdown}
-              />
-              <MarkPreContainer>
-                <Markdown
-                  markdown={markdown}
-                  setMarkdown={setMarkdown}
-                  toggleBg={toggleBg}
-                  toggle={toggle}
-                  setToggle={setToggle}
-                />
-                <Editor
-                  toggleBg={toggleBg}
-                  markdown={markdown}
-                  toggle={toggle}
-                  setToggle={setToggle}
-                />
-              </MarkPreContainer>
-            </Home>
-            <DeletePopUp
-              toggleBg={toggleBg}
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <Container>
+          <Nav
+            toggleBg={toggleBg}
+            setToggleBg={setToggleBg}
+            open={isOpen}
+            setOpen={setIsOpen}
+            setMarkdown={setMarkdown}
+            setName={setName}
+          />
+          <Home $isOpen={isOpen} $toggleDel={toggleDel} $isLoading={isLoading}>
+            <TitleBar
               toggleDel={toggleDel}
               setToggleDel={setToggleDel}
+              setOpen={setIsOpen}
+              setToggle={setToggle}
+              open={isOpen}
+              markdown={markdown}
               name={name}
               setName={setName}
               setMarkdown={setMarkdown}
             />
-          </Container>
-        </ThemeProvider>
-      </ApiValue.Provider>
+            <MarkPreContainer>
+              <Markdown
+                markdown={markdown}
+                setMarkdown={setMarkdown}
+                toggleBg={toggleBg}
+                toggle={toggle}
+                setToggle={setToggle}
+              />
+              <Editor
+                toggleBg={toggleBg}
+                markdown={markdown}
+                toggle={toggle}
+                setToggle={setToggle}
+              />
+            </MarkPreContainer>
+          </Home>
+          <DeletePopUp
+            toggleBg={toggleBg}
+            toggleDel={toggleDel}
+            setToggleDel={setToggleDel}
+            name={name}
+            setName={setName}
+            setMarkdown={setMarkdown}
+          />
+          {isLoading && <Loader />}
+          {isSuccessful && (
+            <Feedback
+              text="Saved successfully"
+              icon={<FaRegCheckCircle color="green" size={24} />}
+            />
+          )}
+          {isError && (
+            <Feedback
+              text="Name Exist Already"
+              icon={<TiCancel color="red" size={20} />}
+            />
+          )}
+        </Container>
+      </ThemeProvider>
     </>
   );
 }

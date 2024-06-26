@@ -7,7 +7,7 @@ const ItemSchema = new Schema(
     name: {
       type: String,
       required: [true, "Name is required"],
-      unique: true,
+      unique: [true, "Name exist already"],
       trim: true,
       maxlength: [50, "Name cannot exceed 50 characters"],
       minlength: [3, "Name must exceed 3 characters"],

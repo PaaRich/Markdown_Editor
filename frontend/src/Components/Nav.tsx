@@ -14,7 +14,7 @@ import {
   ItemList,
   NotFound,
 } from "../Styled/Nav.styled";
-import { ApiValue } from "../App";
+import { CONTEXT_VALUE } from "../store/AppContext";
 
 interface NavProps {
   open: boolean;
@@ -38,7 +38,8 @@ const Nav = ({
   setMarkdown,
   setName,
 }: NavProps) => {
-  const value = useContext(ApiValue);
+  const value = useContext(CONTEXT_VALUE);
+  const myApiValue = value.apiValue;
   const isOpen: boolean = open;
   return (
     <Container $isOpen={isOpen}>
@@ -60,8 +61,8 @@ const Nav = ({
             </span>
           </Button>
           <ItemList>
-            {value.length > 0 ? (
-              value.map((item: Item) => (
+            {myApiValue?.length > 0 ? (
+              myApiValue?.map((item: Item) => (
                 <Item
                   key={item.id}
                   date={item.createdAt?.split("T")[0]}

@@ -18,6 +18,7 @@ const DelBtnDrop = keyframes`
     opacity: 1;
   }
 `;
+
 export const Container = styled.div<{
   $toggleBg: boolean;
   $toggleDel: boolean;
@@ -78,5 +79,18 @@ export const Container = styled.div<{
   }
   & button:focus {
     outline: none;
+  }
+`;
+export const CloseBtn = styled.div<{ $toggleBg: boolean }>`
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  color: ${(props) => (props.$toggleBg ? "#ffffff86" : "#0000007d")};
+  transition-duration: 0.3s;
+
+  &:hover {
+    color: white;
+    background-color: ${(props) => props.theme.backgroundColors.brickRed};
   }
 `;
