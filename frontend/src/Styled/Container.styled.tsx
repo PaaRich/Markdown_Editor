@@ -17,7 +17,7 @@ export const Home = styled.div<{
   opacity: ${(props) =>
     props.$isOpen || props.$toggleDel || props.$isLoading ? "0.8" : "1"};
   pointer-events: ${(props) =>
-    props.$isOpen || props.$toggleDel || props.$isLoading ? "none" : "auto"};
+    props.$toggleDel || props.$isLoading ? "none" : "auto"};
 `;
 const LoaderAnim = keyframes` 
 0% {
@@ -37,7 +37,7 @@ export const Loader = styled.div`
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  color: #686d6c;
+  color: rgba(228, 102, 67, 0.664);
   box-shadow: calc(1 * var(--d)) calc(0 * var(--d)) 0 0,
     calc(0.707 * var(--d)) calc(0.707 * var(--d)) 0 1px,
     calc(0 * var(--d)) calc(1 * var(--d)) 0 2px,
@@ -46,6 +46,7 @@ export const Loader = styled.div`
     calc(-0.707 * var(--d)) calc(-0.707 * var(--d)) 0 5px,
     calc(0 * var(--d)) calc(-1 * var(--d)) 0 6px;
   animation: ${LoaderAnim} 1s infinite steps(8);
+  z-index: 1000;
 `;
 const SuccessAnim = keyframes`
   0%{
@@ -68,7 +69,7 @@ export const FeedbackContainer = styled.div`
   transform: translate(-50%, 1%);
   width: 250px;
   height: 40px;
-  background-color: #f5f5f5a6;
+  background-color: #f5f5f5df;
   border-radius: 5px;
   display: flex;
   border: none;

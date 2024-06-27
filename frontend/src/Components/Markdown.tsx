@@ -2,7 +2,6 @@ import { IoEyeOutline } from "react-icons/io5";
 import { Container, Header } from "../Styled/Markdown.styled";
 import { RequestBody } from "./TitleBar";
 import axios from "axios";
-//import { useParams } from "react-router-dom";
 
 interface Props {
   markdown: string;
@@ -11,7 +10,7 @@ interface Props {
   setMarkdown: React.Dispatch<React.SetStateAction<string>>;
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;
 }
-//const { id } = useParams;
+
 const Markdown = ({
   markdown,
   setMarkdown,
@@ -21,16 +20,20 @@ const Markdown = ({
 }: Props) => {
   const handleOnSubmit: React.FormEventHandler<HTMLFormElement> = (Event) => {
     Event.preventDefault();
+
+    //request body
     const data: RequestBody = {
       //name: name,
       description: markdown,
       createdAt: new Date(),
     };
+
     axios
       .post("http://localhost:3000/api/v1/markdown", data)
       .then((response) => console.log(`${response} returned`))
       .catch((err) => console.log(err));
   };
+
   return (
     <Container $toggleBg={toggleBg} $toggle={toggle}>
       <Header $toggleBg={toggleBg} $toggle={toggle}>

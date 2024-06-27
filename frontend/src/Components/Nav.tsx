@@ -5,7 +5,6 @@ import { FaRegMoon } from "react-icons/fa6";
 import { TiWeatherSunny } from "react-icons/ti";
 import { MdOutlineClose } from "react-icons/md";
 import { TbFileSad } from "react-icons/tb";
-//import { Link } from "react-router-dom";
 import {
   BackgroundToggle,
   Button,
@@ -14,7 +13,7 @@ import {
   ItemList,
   NotFound,
 } from "../Styled/Nav.styled";
-import { CONTEXT_VALUE } from "../store/AppContext";
+import { CONTEXT_VALUE } from "../store/Context";
 
 interface NavProps {
   open: boolean;
@@ -38,9 +37,12 @@ const Nav = ({
   setMarkdown,
   setName,
 }: NavProps) => {
-  const value = useContext(CONTEXT_VALUE);
-  const myApiValue = value.apiValue;
+  //CONTEXT OBJECT
+  const VALUE = useContext(CONTEXT_VALUE);
+  const myApiValue = VALUE.apiValue;
+
   const isOpen: boolean = open;
+
   return (
     <Container $isOpen={isOpen}>
       <div>

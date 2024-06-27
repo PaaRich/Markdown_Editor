@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled.div<{ $isOpen: boolean; $toggleDel: boolean }>`
   background-color: ${(props) => props.theme.backgroundColors.titleBar};
   display: flex;
   align-items: center;
@@ -8,6 +8,8 @@ export const Container = styled.div`
   color: white;
   padding-right: 1rem;
   font-family: "Roboto", sans-serif;
+  pointer-events: ${(props) =>
+    props.$isOpen || props.$toggleDel ? "none" : "auto"};
   & div {
     display: flex;
     align-items: center;
@@ -102,7 +104,7 @@ export const SaveBtn = styled.button<{ $positive?: boolean }>`
   padding: 0.5rem 0.5rem;
   margin-left: 1rem;
   //font-weight: 500;
-  text-wrap: nowrap;
+  overflow-wrap: nowrap;
   cursor: pointer;
   pointer-events: ${(props) => !props.$positive && "none"};
 

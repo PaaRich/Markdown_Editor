@@ -1,56 +1,55 @@
+import React, { useState, useEffect } from "react";
+//import ApiArray interface for apiValue
+import { ApiArray } from "./Context";
+//importing context
+import { CONTEXT_VALUE } from "./Context";
 import axios from "axios";
-import React, { createContext, useState, useEffect } from "react";
-
-interface Api {
-  id?: number;
-  name?: string;
-  description?: string;
-  createdAt?: Date;
-}
-interface ApiArray {
-  [index: number]: Api;
-}
-
-//context interface
-interface MyInterface {
-  apiValue: ApiArray;
-  setApiValue: (value: ApiArray) => void;
-  isSubmitted: boolean;
-  setIsSubmitted: React.Dispatch<React.SetStateAction<boolean>>;
-  reSet: () => void;
-  isLoading: boolean;
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  isSuccessful: boolean;
-  setIsSuccessful: React.Dispatch<React.SetStateAction<boolean>>;
-  isError: boolean;
-  setIsError: React.Dispatch<React.SetStateAction<boolean>>;
-}
-export const CONTEXT_VALUE = createContext<MyInterface | null>(null);
 
 function AppContext({ children }: { children: React.ReactNode }) {
   //apiValue = response from backend api
   const [apiValue, setApiValue] = useState<ApiArray>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-  const [isSuccessful, setIsSuccessful] = useState<boolean>(false);
-  const [isError, setIsError] = useState<boolean>(false);
-  //used to reset the isSubmitted value
 
+  //used to render loader
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  //isSubmitted is used to re-render useEffect [isSubmitted]
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+
+  //Used to render success alert
+  const [isSuccessful, setIsSuccessful] = useState<boolean>(false);
+
+  //used to render error alert
+  const [isError, setIsError] = useState<boolean>(false);
+
+  //used to specify error whether existed name error or network error
+  const [nameError, setNameError] = useState<boolean>(false);
+
+  //used to toggle alert message
   const Timeout = () => {
     setTimeout(() => {
       setIsSuccessful(false);
+      setIsError(false);
     }, 3000);
   };
+
+  //used to reset isSuccessful,isSubmitted,isError
   const reSet = () => {
     setIsSubmitted(false);
     Timeout();
   };
+
+  //GET REQUEST
   const fetchData = async () => {
     const res = await axios.get("http://localhost:3000/api/v1/markdown/");
-    setIsLoading(false);
-    setApiValue(res.data.response);
-    return res;
+    try {
+      setIsLoading(false);
+      setApiValue(res.data.response);
+      return res;
+    } catch (err) {
+      console.log(err);
+    }
   };
+
   useEffect(() => {
     fetchData();
   }, [isSubmitted]);
@@ -69,6 +68,8 @@ function AppContext({ children }: { children: React.ReactNode }) {
         setIsSuccessful,
         isError,
         setIsError,
+        nameError,
+        setNameError,
       }}
     >
       {children}
