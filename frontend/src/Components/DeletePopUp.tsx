@@ -2,7 +2,7 @@ import { useContext } from "react";
 import React from "react";
 import { Container, CloseBtn } from "../Styled/DeletePopUp.styled";
 import axios from "axios";
-import { CONTEXT_VALUE } from "../store/AppContext";
+import { CONTEXT_VALUE } from "../store/Context";
 import { IoClose } from "react-icons/io5";
 //import { Item } from "./Nav";
 interface DelProps {
@@ -22,8 +22,11 @@ const DeletePopUp = ({
   setName,
   setMarkdown,
 }: DelProps) => {
+  //CONTEXT OBJECT
   const VALUE = useContext(CONTEXT_VALUE);
   const setIsSubmitted = VALUE?.setIsSubmitted;
+
+  //Delete request
   const deleteDoc = () => {
     axios.delete(`http://localhost:3000/api/v1/markdown/${name}`).then(() => {
       setName("Untitled.md");

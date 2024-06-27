@@ -12,22 +12,26 @@ import { Loader } from "./Styled/Container.styled";
 import Feedback from "./Components/Feedback";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { TiCancel } from "react-icons/ti";
-import { CONTEXT_VALUE } from "./store/AppContext";
+import { CONTEXT_VALUE } from "./store/Context";
 
 function App() {
   //markdown name
   const [name, setName] = useState<string>("Welcome.md");
+
   //markdown input
   const [markdown, setMarkdown] = useState<string>(" ");
+
   //toggle nav component
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
   //toggle preview component
   const [toggle, setToggle] = useState<boolean>(false);
+
   //toggle delete component
   const [toggleDel, setToggleDel] = useState<boolean>(false);
+
   //toggle background
   const [toggleBg, setToggleBg] = useState<boolean>(true);
-  //toggle loader
 
   const theme = {
     backgroundColors: {
@@ -44,10 +48,15 @@ function App() {
     },
   };
 
+  //CONTEXT OBJECT=VALUE
   const VALUE = useContext(CONTEXT_VALUE);
+
+  //destructured object properties
   const isLoading = VALUE?.isLoading;
   const isSuccessful = VALUE?.isSuccessful;
   const isError = VALUE?.isError;
+  const nameError = VALUE?.nameError;
+
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -73,7 +82,7 @@ function App() {
               setName={setName}
               setMarkdown={setMarkdown}
             />
-            <MarkPreContainer>
+            <MarkPreContainer onClick={() => isOpen && setIsOpen(false)}>
               <Markdown
                 markdown={markdown}
                 setMarkdown={setMarkdown}
@@ -97,16 +106,22 @@ function App() {
             setName={setName}
             setMarkdown={setMarkdown}
           />
+
+          {/* loader */}
           {isLoading && <Loader />}
+
+          {/* Success feedback */}
           {isSuccessful && (
             <Feedback
               text="Saved successfully"
               icon={<FaRegCheckCircle color="green" size={24} />}
             />
           )}
+
+          {/* Error feedback */}
           {isError && (
             <Feedback
-              text="Name Exist Already"
+              text={nameError ? "Name Exist Already" : "Something went wrong"}
               icon={<TiCancel color="red" size={20} />}
             />
           )}

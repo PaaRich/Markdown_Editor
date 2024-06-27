@@ -1,4 +1,3 @@
-//import { useState } from "react";
 import { RiMenuFill } from "react-icons/ri";
 import { MdOutlineClose } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -13,8 +12,9 @@ import {
   SaveBtn,
 } from "../Styled/Title.styled";
 import { useContext } from "react";
-import { CONTEXT_VALUE } from "../store/AppContext";
-interface SetOpen {
+import { CONTEXT_VALUE } from "../store/Context";
+
+interface Props {
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   open: boolean;
@@ -40,17 +40,23 @@ const Title = ({
   name,
   setName,
   setMarkdown,
-}: SetOpen) => {
-  //const [success, setSuccess] = useState<boolean>(false);
-  //const [successMsg,setSuccessMsg]=useState<string>(" ")
+  toggleDel,
+}: Props) => {
+  //used redefined and localized isOpen
   const localOpen = open;
+
   const positive = markdown.length > 2;
+
+  //CONTEXT OBJECT
   const VALUE = useContext(CONTEXT_VALUE);
-  const setIsSubmitted = VALUE?.setIsSubmitted;
-  const setIsLoading = VALUE?.setIsLoading;
-  const setIsSuccessful = VALUE?.setIsSuccessful;
-  const setIsError = VALUE?.setIsError;
-  //const { setIsSubmitted, setIsLoading, setIsSuccessful } = VALUE;
+
+  //CONTEXT API VALUES
+  const setIsSubmitted = VALUE.setIsSubmitted;
+  const setIsLoading = VALUE.setIsLoading;
+  const setIsSuccessful = VALUE.setIsSuccessful;
+  const setIsError = VALUE.setIsError;
+  const setNameError = VALUE.setNameError;
+
   const handleOnSubmit: React.FormEventHandler<HTMLFormElement> = (Event) => {
     Event.preventDefault();
     VALUE?.reSet();
@@ -64,34 +70,25 @@ const Title = ({
       .then(() => {
         setName("Untitled.md");
         setMarkdown(" ");
-        // setSuccessMsg()
         setIsSubmitted(true);
         setIsLoading(false);
         setIsSuccessful(true);
       })
-      .catch(
-        (err) => {
-          setIsError(true);
-          err.message === "Request failed with status code 404" &&
-            console.log("Change filename");
-          setIsLoading(false);
-        }
-        // console.log(
-        //   err.config.data.split(",")[0].match(/^(?!name$)[\w@]+$/),
-        //   err.config.data.split(",")[0],
-        //   err
-        // )
-      );
+      .catch((err) => {
+        err.message === "Request failed with status code 404" &&
+          setNameError(true);
+        setIsLoading(false);
+        setIsError(true);
+      });
   };
 
   return (
     <form onSubmit={handleOnSubmit}>
-      <Container>
+      <Container $isOpen={open} $toggleDel={toggleDel}>
         <div>
           <Menu
             onClick={() => {
               setOpen(!localOpen);
-              // setToggle(false);
             }}
           >
             {open ? <MdOutlineClose size={26} /> : <RiMenuFill size={26} />}

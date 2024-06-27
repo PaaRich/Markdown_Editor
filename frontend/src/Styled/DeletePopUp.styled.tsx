@@ -41,7 +41,7 @@ export const Container = styled.div<{
   width: 300px;
   box-shadow: 3px 5px 15px #0000004f;
   transition-duration: 0.5s;
-  animation: ${DelBtnDrop} 2s ease-out forwards;
+  animation: ${DelBtnDrop} 1.5s ease-out forwards;
 
   & p:first-of-type {
     font-weight: 700;
@@ -91,6 +91,7 @@ export const CloseBtn = styled.div<{ $toggleBg: boolean }>`
 
   &:hover {
     color: white;
-    background-color: ${(props) => props.theme.backgroundColors.brickRed};
+    //background-color: ${(props) => props.theme.backgroundColors.brickRed};
+    background-color: rgba(243, 151, 101, 0.721);
   }
 `;

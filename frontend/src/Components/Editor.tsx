@@ -2,8 +2,8 @@ import ReactMarkdown from "react-markdown";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 import { Container, PreviewContainer, Header } from "../Styled/Editor.styled";
-//import remarkGfm from "remark-gfm";
-// import remarkToc from "remark-toc";
+import remarkGfm from "remark-gfm";
+import remarkToc from "remark-toc";
 
 interface Editor {
   markdown: string;
@@ -24,7 +24,9 @@ const Editor = ({ markdown, toggle, setToggle, toggleBg }: Editor) => {
       </Header>
       <Container $toggle={toggle} $toggleBg={toggleBg}>
         <div>
-          <ReactMarkdown>{markdown}</ReactMarkdown>
+          <ReactMarkdown remarkPlugins={[remarkGfm, remarkToc]}>
+            {markdown}
+          </ReactMarkdown>
         </div>
       </Container>
     </PreviewContainer>
