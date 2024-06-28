@@ -39,10 +39,13 @@ const Nav = ({
 }: NavProps) => {
   //CONTEXT OBJECT
   const VALUE = useContext(CONTEXT_VALUE);
-  const myApiValue = VALUE.apiValue;
+  const post = VALUE.post;
+  const setIsLoading = VALUE.setIsLoading;
+  const setIsUpdate = VALUE.setIsUpdate;
+  const setId = VALUE.setId;
 
   const isOpen: boolean = open;
-
+  //console.log(post[0].id);
   return (
     <Container $isOpen={isOpen}>
       <div>
@@ -53,8 +56,11 @@ const Nav = ({
           </div>
           <Button
             onClick={() => {
+              setOpen(false);
               setMarkdown(" ");
-              setName("Untitled.md");
+              setName("New.md");
+              setIsLoading(false);
+              setIsUpdate(false);
             }}
           >
             <span>
@@ -63,8 +69,8 @@ const Nav = ({
             </span>
           </Button>
           <ItemList>
-            {myApiValue?.length > 0 ? (
-              myApiValue?.map((item: Item) => (
+            {post?.length > 0 ? (
+              [...post]?.reverse().map((item: Item) => (
                 <Item
                   key={item.id}
                   date={item.createdAt?.split("T")[0]}
@@ -72,6 +78,8 @@ const Nav = ({
                   onclick={() => {
                     setMarkdown(item.description);
                     setName(item.name);
+                    setIsUpdate(true);
+                    setId(item.id);
                   }}
                 />
               ))

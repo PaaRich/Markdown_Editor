@@ -1,4 +1,4 @@
-import React from "react";
+import { memo } from "react";
 import { ItemStyled } from "../Styled/Nav.styled";
 import { CiFileOn } from "react-icons/ci";
 interface ItemProps {
@@ -7,9 +7,9 @@ interface ItemProps {
   onclick?: () => void;
 }
 
-const Item = (props: ItemProps) => {
+const Item = memo((props: ItemProps) => {
   return (
-    <React.Fragment>
+    <>
       <ItemStyled onClick={props.onclick}>
         <CiFileOn size={23} />
         <div>
@@ -17,8 +17,8 @@ const Item = (props: ItemProps) => {
           <p>{props.name}</p>
         </div>
       </ItemStyled>
-    </React.Fragment>
+    </>
   );
-};
+});
 
 export default Item;

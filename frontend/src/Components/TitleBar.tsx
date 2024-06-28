@@ -24,6 +24,7 @@ interface Props {
   name: string;
   setName: React.Dispatch<React.SetStateAction<string>>;
   setMarkdown: React.Dispatch<React.SetStateAction<string>>;
+  isLoading: boolean;
 }
 
 export interface RequestBody {
@@ -39,8 +40,8 @@ const Title = ({
   markdown,
   name,
   setName,
-  setMarkdown,
   toggleDel,
+  isLoading,
 }: Props) => {
   //used redefined and localized isOpen
   const localOpen = open;
@@ -56,6 +57,10 @@ const Title = ({
   const setIsSuccessful = VALUE.setIsSuccessful;
   const setIsError = VALUE.setIsError;
   const setNameError = VALUE.setNameError;
+  const isUpdate = VALUE.isUpdate;
+  const id = VALUE.id;
+
+  //const myApiValue = VALUE.apiValue;
 
   const handleOnSubmit: React.FormEventHandler<HTMLFormElement> = (Event) => {
     Event.preventDefault();
@@ -65,21 +70,37 @@ const Title = ({
       description: markdown,
       createdAt: new Date(),
     };
-    axios
-      .post("http://localhost:3000/api/v1/markdown", data)
-      .then(() => {
-        setName("Untitled.md");
-        setMarkdown(" ");
-        setIsSubmitted(true);
-        setIsLoading(false);
-        setIsSuccessful(true);
-      })
-      .catch((err) => {
-        err.message === "Request failed with status code 404" &&
-          setNameError(true);
-        setIsLoading(false);
-        setIsError(true);
-      });
+    //isUpdate specify the stat of item new or old thus patch or post
+
+    if (isUpdate) {
+      axios
+        .patch(`http://localhost:3000/api/v1/markdown/${id}`, data)
+        .then(() => {
+          setIsSubmitted(true);
+          setIsLoading(false);
+          setIsSuccessful(true);
+        })
+        .catch((err) => {
+          err.message === "Request failed with status code 404" &&
+            setNameError(true);
+          setIsLoading(false);
+          setIsError(true);
+        });
+    } else {
+      axios
+        .post("http://localhost:3000/api/v1/markdown", data)
+        .then(() => {
+          setIsSubmitted(true);
+          setIsLoading(false);
+          setIsSuccessful(true);
+        })
+        .catch((err) => {
+          err.message === "Request failed with status code 404" &&
+            setNameError(true);
+          setIsLoading(false);
+          setIsError(true);
+        });
+    }
   };
 
   return (
@@ -114,13 +135,20 @@ const Title = ({
         </div>
 
         <div>
-          <DelBtn onClick={() => setToggleDel(true)} $positive={positive}>
+          <DelBtn
+            onClick={() => setToggleDel(true)}
+            $positive={positive}
+            $isLoading={isLoading}
+          >
             <RiDeleteBin6Line size={21} />
           </DelBtn>
           <SaveBtn
             $positive={positive}
+            $isLoading={isLoading}
             type="submit"
-            onClick={() => setIsLoading(true)}
+            onClick={() => {
+              setIsLoading(true);
+            }}
           >
             <IoSaveOutline size={20} />
             <span>Save Changes</span>

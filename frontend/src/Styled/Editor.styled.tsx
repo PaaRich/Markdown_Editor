@@ -33,6 +33,7 @@ export const Container = styled.div<{ $toggle?: boolean; $toggleBg?: boolean }>`
     line-height: 24px;
     color: ${(props) => (props.$toggleBg ? "#C1C4CB" : "#35393F")};
   }
+
   h1,
   h2,
   h3,

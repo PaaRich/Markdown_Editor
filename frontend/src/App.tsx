@@ -56,6 +56,7 @@ function App() {
   const isSuccessful = VALUE?.isSuccessful;
   const isError = VALUE?.isError;
   const nameError = VALUE?.nameError;
+  const isDeleted = VALUE.isDeleted;
 
   return (
     <>
@@ -81,6 +82,7 @@ function App() {
               name={name}
               setName={setName}
               setMarkdown={setMarkdown}
+              isLoading={isLoading}
             />
             <MarkPreContainer onClick={() => isOpen && setIsOpen(false)}>
               <Markdown
@@ -121,7 +123,17 @@ function App() {
           {/* Error feedback */}
           {isError && (
             <Feedback
-              text={nameError ? "Name Exist Already" : "Something went wrong"}
+              text={
+                nameError ? "Document exist already" : "Something went wrong"
+              }
+              icon={<TiCancel color="red" size={20} />}
+            />
+          )}
+
+          {/* Delete alert */}
+          {isDeleted && (
+            <Feedback
+              text="Document deleted"
               icon={<TiCancel color="red" size={20} />}
             />
           )}

@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
-export const Container = styled.div<{ $isOpen: boolean; $toggleDel: boolean }>`
+export const Container = styled.div<{
+  $isOpen: boolean;
+  $toggleDel: boolean;
+}>`
   background-color: ${(props) => props.theme.backgroundColors.titleBar};
   display: flex;
   align-items: center;
@@ -80,17 +83,21 @@ export const FileName = styled.div`
     }
   }
 `;
-export const DelBtn = styled.div<{ $positive?: boolean }>`
+export const DelBtn = styled.div<{ $positive?: boolean; $isLoading: boolean }>`
   cursor: pointer;
   transition-duration: 0.5s;
   color: rgb(124, 129, 139);
-  pointer-events: ${(props) => !props.$positive && "none"};
+  pointer-events: ${(props) =>
+    (!props.$positive || props.$isLoading) && "none"};
 
   &:hover {
     color: ${(props) => props.theme.backgroundColors.lightBrickRed};
   }
 `;
-export const SaveBtn = styled.button<{ $positive?: boolean }>`
+export const SaveBtn = styled.button<{
+  $positive: boolean;
+  $isLoading: boolean;
+}>`
   display: flex;
   align-items: center;
   border: none;
@@ -106,7 +113,8 @@ export const SaveBtn = styled.button<{ $positive?: boolean }>`
   //font-weight: 500;
   overflow-wrap: nowrap;
   cursor: pointer;
-  pointer-events: ${(props) => !props.$positive && "none"};
+  pointer-events: ${(props) =>
+    (!props.$positive || props.$isLoading) && "none"};
 
   & span {
     font-size: 16px;

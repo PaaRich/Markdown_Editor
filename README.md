@@ -1,45 +1,70 @@
-Markdown_Editor
+# Markdown_Editor
 
-A web-based Markdown editor built with React and TypeScript.
+## Description
 
-Features
+Markdown_Editor is a comprehensive tool designed to Create, Read, Update, and Delete markdown documents. It allows users to name and save documents for easy access, edit markdown with real-time formatted previews, view a full-page preview of the formatted content, and enjoy an optimal layout depending on their device's screen size.
 
-- Live preview of Markdown text
-- Syntax highlighting for easy editing
-- Support for multiple Markdown flavors
-- Easy formatting tools (bold, italic, headings, etc.)
-- Code snippet support with highlighting
-- Table of contents generation
-- Export to HTML, PDF, and Markdown file
+## Table of Contents
 
-Getting Started
+- [Description](#description)
+- [Installation Instructions](#installation-instructions)
+- [Usage](#usage)
+- [Features](#features)
+- [License](#license)
+- [Credits](#credits)
+- [Contact Information](#contact-information)
 
-1. Clone the repository: `git clone https://github.com/PaaRich/Markdown_Editor.git`
-2. Install dependencies: npm install
-3. Start the app: npm run dev
-4. Open in browser: http://localhost:5173
+## Installation Instructions
 
-Usage
+To install and set up Markdown_Editor, follow the steps below using Vite, a fast and modern build tool for React projects:
 
-- Type Markdown text in the editor
-- Preview your Markdown text in real-time
-- Export your Markdown text to various formats
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/PaaRich/Markdown_Editor.git
+   ```
+2. **Navigate to the project directory:**
 
-Built With
-- React
-- TypeScript
-- Markdown-It (Markdown parser)
-- Highlight.js (syntax highlighting)
-- React-Markdown (Markdown component)
+   ```bash
+   cd frontend
+   ```
 
-License
+3. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+4. **Start the development server:**
+   ```bash
+   npm run dev
+   ```
+
+## Usage
+
+- **Create, Read, Update, and Delete markdown documents**: Manage your markdown documents effortlessly.
+- **Name and save documents**: Easily name and save documents for future access.
+- **Edit markdown with a formatted preview**: Edit markdown and see a real-time formatted preview of your content.
+- **View a full-page preview**: Switch to a full-page preview to see your formatted content without distractions.
+- **Optimal layout for any device**: Enjoy an optimal layout tailored to your device's screen size.
+
+## Features
+
+- Create, Read, Update, and Delete markdown documents
+- Name and save documents to be accessed as needed
+- Edit the markdown of a document and see the formatted preview of the content
+- View a full-page preview of the formatted content
+- View the optimal layout for the app depending on their device's screen size
+
+## License
 
 MIT License
 
-Author
+## Author
 
 PaaRich
 
-Acknowledgments
+## Acknowledgments
 
-- Thanks to the React and TypeScript communities for their support and resources.
+Thanks to the React and TypeScript communities for their support and resources
+
+## Contact Information
+
+For any inquiries or support, please contact: siehrichmond50@gmail.com

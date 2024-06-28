@@ -7,7 +7,7 @@ import axios from "axios";
 
 function AppContext({ children }: { children: React.ReactNode }) {
   //apiValue = response from backend api
-  const [apiValue, setApiValue] = useState<ApiArray>([]);
+  const [post, setPost] = useState<ApiArray>([]);
 
   //used to render loader
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -24,11 +24,21 @@ function AppContext({ children }: { children: React.ReactNode }) {
   //used to specify error whether existed name error or network error
   const [nameError, setNameError] = useState<boolean>(false);
 
+  //used to render delete alert
+  const [isDeleted, setIsDeleted] = useState<boolean>(false);
+
+  //used to determine whether to update or not
+  const [isUpdate, setIsUpdate] = useState<boolean>(false);
+
+  //id
+  const [id, setId] = useState<number>(3);
+
   //used to toggle alert message
   const Timeout = () => {
     setTimeout(() => {
       setIsSuccessful(false);
       setIsError(false);
+      setIsDeleted(false);
     }, 3000);
   };
 
@@ -43,7 +53,7 @@ function AppContext({ children }: { children: React.ReactNode }) {
     const res = await axios.get("http://localhost:3000/api/v1/markdown/");
     try {
       setIsLoading(false);
-      setApiValue(res.data.response);
+      setPost(res.data.response);
       return res;
     } catch (err) {
       console.log(err);
@@ -57,8 +67,8 @@ function AppContext({ children }: { children: React.ReactNode }) {
   return (
     <CONTEXT_VALUE.Provider
       value={{
-        apiValue,
-        setApiValue,
+        post,
+        setPost,
         isSubmitted,
         setIsSubmitted,
         reSet,
@@ -70,6 +80,12 @@ function AppContext({ children }: { children: React.ReactNode }) {
         setIsError,
         nameError,
         setNameError,
+        isDeleted,
+        setIsDeleted,
+        isUpdate,
+        setIsUpdate,
+        id,
+        setId,
       }}
     >
       {children}

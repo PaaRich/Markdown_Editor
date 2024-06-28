@@ -119,6 +119,7 @@ export const ItemList = styled.div`
   overflow-y: scroll;
   overflow-x: hidden;
   -ms-overflow-style: none;
+  //border-bottom: 1px solid wheat;
 
   &::-webkit-scrollbar {
     display: none;
@@ -134,6 +135,7 @@ export const NotFound = styled.div`
 
   h2 {
     font-size: 45px;
+    font-weight: normal;
   }
 `;
 export const BackgroundToggle = styled.div<{ $toggleBg: boolean }>`

@@ -25,14 +25,23 @@ const DeletePopUp = ({
   //CONTEXT OBJECT
   const VALUE = useContext(CONTEXT_VALUE);
   const setIsSubmitted = VALUE?.setIsSubmitted;
+  const setIsDeleted = VALUE?.setIsDeleted;
+  const setIsLoading = VALUE?.setIsLoading;
+  const setIsUpdate = VALUE?.setIsUpdate;
+  const id = VALUE.id;
 
   //Delete request
   const deleteDoc = () => {
-    axios.delete(`http://localhost:3000/api/v1/markdown/${name}`).then(() => {
-      setName("Untitled.md");
-      setMarkdown(" ");
-      setIsSubmitted(true);
-    });
+    axios
+      .delete(`http://localhost:3000/api/v1/markdown/${id}`)
+      .then(() => {
+        setName("Untitled.md");
+        setMarkdown(" ");
+        setIsSubmitted(true);
+        setIsDeleted(true);
+        setIsUpdate(false);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -52,9 +61,10 @@ const DeletePopUp = ({
         <button
           type="submit"
           onClick={() => {
-            setToggleDel(() => false);
+            setToggleDel(false);
             VALUE?.reSet();
             deleteDoc();
+            setIsLoading(true);
           }}
         >
           Confirm & Delete

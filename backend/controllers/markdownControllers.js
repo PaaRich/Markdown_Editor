@@ -50,7 +50,7 @@ const updateItem = asyncErrorHandler(async (req, res, next) => {
 
 const deleteItem = asyncErrorHandler(async (req, res, next) => {
   const { id } = req.params;
-  const response = await ItemModel.findOneAndDelete({ name: id });
+  const response = await ItemModel.findByIdAndDelete(id);
   if (!response) {
     const error = new ErrorObj(`This ${id} not found`, 404);
     next(error);
