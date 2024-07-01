@@ -33,7 +33,7 @@ const DeletePopUp = ({
   //Delete request
   const deleteDoc = () => {
     axios
-      .delete(`http://localhost:3000/api/v1/markdown/${id}`)
+      .delete(`/markdown/${id}`)
       .then(() => {
         setName("Untitled.md");
         setMarkdown(" ");

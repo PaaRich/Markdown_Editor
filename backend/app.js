@@ -7,7 +7,11 @@ const ErrorObj = require("./Utils/ErrorObj");
 const globalErrorHandler = require("./Utils/globalErrorHandler");
 const cors = require("cors");
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://www.markdowneditor1.netlify.app",
+  })
+);
 app.use(express.json());
 app.use(morgan("dev"));
 app.use("/api/v1/markdown", router);

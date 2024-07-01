@@ -50,7 +50,7 @@ function AppContext({ children }: { children: React.ReactNode }) {
 
   //GET REQUEST
   const fetchData = async () => {
-    const res = await axios.get("http://localhost:3000/api/v1/markdown/");
+    const res = await axios.get("/markdown");
     try {
       setIsLoading(false);
       setPost(res.data.response);

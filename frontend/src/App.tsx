@@ -13,6 +13,10 @@ import Feedback from "./Components/Feedback";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { TiCancel } from "react-icons/ti";
 import { CONTEXT_VALUE } from "./store/Context";
+import axios from "axios";
+
+axios.defaults.baseURL = "https://www.markdowneditor1.onrender.com/api/v1";
+axios.defaults.withCredentials = true;
 
 function App() {
   //markdown name

@@ -74,7 +74,7 @@ const Title = ({
 
     if (isUpdate) {
       axios
-        .patch(`http://localhost:3000/api/v1/markdown/${id}`, data)
+        .patch(`/markdown/${id}`, data)
         .then(() => {
           setIsSubmitted(true);
           setIsLoading(false);
@@ -88,7 +88,7 @@ const Title = ({
         });
     } else {
       axios
-        .post("http://localhost:3000/api/v1/markdown", data)
+        .post("/markdown", data)
         .then(() => {
           setIsSubmitted(true);
           setIsLoading(false);
