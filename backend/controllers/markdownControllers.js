@@ -3,7 +3,8 @@ const asyncErrorHandler = require("../Utils/asyncErrorHandler");
 const ErrorObj = require("../Utils/ErrorObj");
 
 const getAllItems = asyncErrorHandler(async (req, res, next) => {
-  const response = await ItemModel.find();
+  const response = await ItemModel.find().sort("-createdAt");
+  //const response = await ItemModel.find().sort({ createdAt: -1 });
   res.status(200).json({
     count: response.length,
     status: "success",

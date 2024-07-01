@@ -71,7 +71,7 @@ const Nav = ({
           </Button>
           <ItemList>
             {post?.length > 0 ? (
-              [...post]?.reverse().map((item: Item) => (
+              post?.map((item: Item) => (
                 <Item
                   key={item.id}
                   date={item.createdAt?.split("T")[0]}
