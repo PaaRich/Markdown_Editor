@@ -45,6 +45,7 @@ const Nav = ({
   const setId = VALUE.setId;
 
   const isOpen: boolean = open;
+
   //console.log(post[0].id);
   return (
     <Container $isOpen={isOpen}>
@@ -64,7 +65,7 @@ const Nav = ({
             }}
           >
             <span>
-              <FiPlus />
+              <FiPlus size={20} />
               New Document
             </span>
           </Button>

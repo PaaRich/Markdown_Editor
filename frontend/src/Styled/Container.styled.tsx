@@ -5,8 +5,9 @@ export const Container = styled.div`
   transition-duration: 0.5s;
   //border-right: 2px solid rgba(0, 0, 0, 0.266);
 `;
-export const MarkPreContainer = styled.div`
+export const MarkPreContainer = styled.section`
   display: flex;
+  margin-top: 58px;
 `;
 export const Home = styled.div<{
   $isOpen: boolean;
@@ -74,6 +75,7 @@ export const FeedbackContainer = styled.div`
   display: flex;
   border: none;
   animation: ${SuccessAnim} 1s ease-out forwards;
+  z-index: 1000;
 
   & > div {
     margin: 0 auto;

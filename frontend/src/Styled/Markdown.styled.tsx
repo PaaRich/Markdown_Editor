@@ -39,6 +39,7 @@ export const Container = styled.div<{ $toggleBg: boolean; $toggle: boolean }>`
   }
 `;
 export const Header = styled.div<{ $toggleBg: boolean; $toggle: boolean }>`
+  //position: sticky;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -65,7 +66,7 @@ export const Header = styled.div<{ $toggleBg: boolean; $toggle: boolean }>`
   &:nth-child(2):active {
     color: red;
   }
-  @media (max-width: 468px) {
+  @media (max-width: 576px) {
     & svg {
       display: block;
     }

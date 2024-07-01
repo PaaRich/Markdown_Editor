@@ -124,7 +124,7 @@ function App() {
           {isError && (
             <Feedback
               text={
-                nameError ? "Document exist already" : "Something went wrong"
+                nameError ? "Doc/Name exist already" : "Something went wrong"
               }
               icon={<TiCancel color="red" size={20} />}
             />

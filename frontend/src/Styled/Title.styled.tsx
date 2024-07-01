@@ -4,6 +4,9 @@ export const Container = styled.div<{
   $isOpen: boolean;
   $toggleDel: boolean;
 }>`
+  position: fixed;
+  top: 0;
+  width: 100%;
   background-color: ${(props) => props.theme.backgroundColors.titleBar};
   display: flex;
   align-items: center;
@@ -13,6 +16,7 @@ export const Container = styled.div<{
   font-family: "Roboto", sans-serif;
   pointer-events: ${(props) =>
     props.$isOpen || props.$toggleDel ? "none" : "auto"};
+  z-index: 1000;
   & div {
     display: flex;
     align-items: center;

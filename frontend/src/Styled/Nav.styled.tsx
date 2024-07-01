@@ -73,6 +73,9 @@ export const Button = styled.button`
     justify-content: center;
     align-items: center;
   }
+  & > span svg {
+    margin-right: 2px;
+  }
   &:focus {
     outline: none;
   }
