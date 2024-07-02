@@ -4,6 +4,7 @@ import { Container, CloseBtn } from "../Styled/DeletePopUp.styled";
 import axios from "axios";
 import { CONTEXT_VALUE } from "../store/Context";
 import { IoClose } from "react-icons/io5";
+import { toast } from "react-toastify";
 //import { Item } from "./Nav";
 interface DelProps {
   toggleBg: boolean;
@@ -25,7 +26,6 @@ const DeletePopUp = ({
   //CONTEXT OBJECT
   const VALUE = useContext(CONTEXT_VALUE);
   const setIsSubmitted = VALUE?.setIsSubmitted;
-  const setIsDeleted = VALUE?.setIsDeleted;
   const setIsLoading = VALUE?.setIsLoading;
   const setIsUpdate = VALUE?.setIsUpdate;
   const id = VALUE.id;
@@ -35,10 +35,10 @@ const DeletePopUp = ({
     axios
       .delete(`https://markdowneditor1.onrender.com/api/v1/markdown/${id}`)
       .then(() => {
+        toast.success("Document deleted");
         setName("Untitled.md");
         setMarkdown(" ");
         setIsSubmitted(true);
-        setIsDeleted(true);
         setIsUpdate(false);
       })
       .catch((err) => console.log(err));

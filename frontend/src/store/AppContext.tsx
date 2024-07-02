@@ -15,37 +15,15 @@ function AppContext({ children }: { children: React.ReactNode }) {
   //isSubmitted is used to re-render useEffect [isSubmitted]
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
-  //Used to render success alert
-  const [isSuccessful, setIsSuccessful] = useState<boolean>(false);
-
-  //used to render error alert
-  const [isError, setIsError] = useState<boolean>(false);
-
-  //used to specify error whether existed name error or network error
-  const [nameError, setNameError] = useState<boolean>(false);
-
-  //used to render delete alert
-  const [isDeleted, setIsDeleted] = useState<boolean>(false);
-
   //used to determine whether to update or not
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
 
   //id
   const [id, setId] = useState<number>(3);
 
-  //used to toggle alert message
-  const Timeout = () => {
-    setTimeout(() => {
-      setIsSuccessful(false);
-      setIsError(false);
-      setIsDeleted(false);
-    }, 3000);
-  };
-
-  //used to reset isSuccessful,isSubmitted,isError
+  //used to reset isSubmitted
   const reSet = () => {
     setIsSubmitted(false);
-    Timeout();
   };
 
   //GET REQUEST
@@ -82,14 +60,6 @@ function AppContext({ children }: { children: React.ReactNode }) {
         reSet,
         setIsLoading,
         isLoading,
-        isSuccessful,
-        setIsSuccessful,
-        isError,
-        setIsError,
-        nameError,
-        setNameError,
-        isDeleted,
-        setIsDeleted,
         isUpdate,
         setIsUpdate,
         id,

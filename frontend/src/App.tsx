@@ -9,10 +9,9 @@ import Markdown from "./Components/Markdown";
 import Editor from "./Components/Editor";
 import DeletePopUp from "./Components/DeletePopUp";
 import { Loader } from "./Styled/Container.styled";
-import Feedback from "./Components/Feedback";
-import { FaRegCheckCircle } from "react-icons/fa";
-import { TiCancel } from "react-icons/ti";
 import { CONTEXT_VALUE } from "./store/Context";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import axios from "axios";
 
 // axios.defaults.baseURL = "https://www.markdowneditor1.onrender.com/api/v1";
@@ -57,16 +56,17 @@ function App() {
 
   //destructured object properties
   const isLoading = VALUE?.isLoading;
-  const isSuccessful = VALUE?.isSuccessful;
-  const isError = VALUE?.isError;
-  const nameError = VALUE?.nameError;
-  const isDeleted = VALUE.isDeleted;
 
   return (
     <>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <Container>
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+          />
           <Nav
             toggleBg={toggleBg}
             setToggleBg={setToggleBg}
@@ -115,32 +115,6 @@ function App() {
 
           {/* loader */}
           {isLoading && <Loader />}
-
-          {/* Success feedback */}
-          {isSuccessful && (
-            <Feedback
-              text="Saved successfully"
-              icon={<FaRegCheckCircle color="green" size={24} />}
-            />
-          )}
-
-          {/* Error feedback */}
-          {isError && (
-            <Feedback
-              text={
-                nameError ? "Doc/Name exist already" : "Something went wrong"
-              }
-              icon={<TiCancel color="red" size={20} />}
-            />
-          )}
-
-          {/* Delete alert */}
-          {isDeleted && (
-            <Feedback
-              text="Document deleted"
-              icon={<TiCancel color="red" size={20} />}
-            />
-          )}
         </Container>
       </ThemeProvider>
     </>

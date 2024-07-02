@@ -13,6 +13,7 @@ import {
 } from "../Styled/Title.styled";
 import { useContext } from "react";
 import { CONTEXT_VALUE } from "../store/Context";
+import { toast } from "react-toastify";
 
 interface Props {
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;
@@ -54,9 +55,6 @@ const Title = ({
   //CONTEXT API VALUES
   const setIsSubmitted = VALUE.setIsSubmitted;
   const setIsLoading = VALUE.setIsLoading;
-  const setIsSuccessful = VALUE.setIsSuccessful;
-  const setIsError = VALUE.setIsError;
-  const setNameError = VALUE.setNameError;
   const isUpdate = VALUE.isUpdate;
   const id = VALUE.id;
 
@@ -81,13 +79,11 @@ const Title = ({
         .then(() => {
           setIsSubmitted(true);
           setIsLoading(false);
-          setIsSuccessful(true);
+          toast.success("updated successfully");
         })
-        .catch((err) => {
-          err.message === "Request failed with status code 404" &&
-            setNameError(true);
+        .catch(() => {
           setIsLoading(false);
-          setIsError(true);
+          toast.error("Something went wrong");
         });
     } else {
       axios
@@ -95,13 +91,11 @@ const Title = ({
         .then(() => {
           setIsSubmitted(true);
           setIsLoading(false);
-          setIsSuccessful(true);
+          toast.success("Saved successfully");
         })
-        .catch((err) => {
-          err.message === "Request failed with status code 404" &&
-            setNameError(true);
+        .catch(() => {
           setIsLoading(false);
-          setIsError(true);
+          toast.error("Something went wrong");
         });
     }
   };

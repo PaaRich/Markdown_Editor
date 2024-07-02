@@ -27,14 +27,6 @@ interface MyInterface {
   reSet: () => void;
   isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  isSuccessful: boolean;
-  setIsSuccessful: React.Dispatch<React.SetStateAction<boolean>>;
-  isError: boolean;
-  setIsError: React.Dispatch<React.SetStateAction<boolean>>;
-  nameError: boolean;
-  setNameError: React.Dispatch<React.SetStateAction<boolean>>;
-  isDeleted: boolean;
-  setIsDeleted: React.Dispatch<React.SetStateAction<boolean>>;
   isUpdate: boolean;
   setIsUpdate: React.Dispatch<React.SetStateAction<boolean>>;
   id: number;
