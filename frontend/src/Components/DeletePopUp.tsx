@@ -33,7 +33,7 @@ const DeletePopUp = ({
   //Delete request
   const deleteDoc = () => {
     axios
-      .delete(`/markdown/${id}`)
+      .delete(`https://markdowneditor1.onrender.com/markdown/${id}`)
       .then(() => {
         setName("Untitled.md");
         setMarkdown(" ");
