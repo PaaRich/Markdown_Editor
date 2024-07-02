@@ -74,7 +74,10 @@ const Title = ({
 
     if (isUpdate) {
       axios
-        .patch(`https://markdowneditor1.onrender.com/markdown/${id}`, data)
+        .patch(
+          `https://markdowneditor1.onrender.com/api/v1/markdown/${id}`,
+          data
+        )
         .then(() => {
           setIsSubmitted(true);
           setIsLoading(false);
@@ -88,7 +91,7 @@ const Title = ({
         });
     } else {
       axios
-        .post("https://markdowneditor1.onrender.com/markdown", data)
+        .post("https://markdowneditor1.onrender.com/api/v1/markdown", data)
         .then(() => {
           setIsSubmitted(true);
           setIsLoading(false);

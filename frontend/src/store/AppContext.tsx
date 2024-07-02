@@ -57,7 +57,7 @@ function AppContext({ children }: { children: React.ReactNode }) {
     // });
     //const res = await axios.get("http://localhost:3000/api/v1/markdown");
     const res = await axios.get(
-      "https://markdowneditor1.onrender.com/markdown"
+      "https://markdowneditor1.onrender.com/api/v1/markdown"
     );
     try {
       setIsLoading(false);
