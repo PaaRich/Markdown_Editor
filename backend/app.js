@@ -9,7 +9,8 @@ const cors = require("cors");
 
 app.use(
   cors({
-    origin: "https://www.markdowneditor1.netlify.app",
+    // origin: "https://www.markdowneditor1.netlify.app",
+    origin: "http://localhost:5173",
   })
 );
 app.use(express.json());
